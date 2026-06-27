@@ -1,48 +1,103 @@
+
 import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 1. Premium Dark Wine & Velvet Aesthetic Setup
+# 1. Premium Soft Wine & Charcoal Elegant Aesthetic
 st.set_page_config(page_title="Fraud Sentry Dashboard", layout="wide")
 
 st.markdown("""
     <style>
-    /* Main Background: Deep Wine/Burgundy Pigment */
-    .stApp { background-color: #2D0202; color: #F5F5DC; }
+    /* Main App Background - Elegant Charcoal Dark */
+    .stApp { 
+        background: radial-gradient(circle, #250206 0%, #120102 100%);
+        color: #F8F9FA; 
+    }
     
-    /* Headings & Text Colors */
-    h1 { color: #D4AF37 !important; font-family: 'Playfair Display', serif; font-size: 42px; text-align: center; font-weight: 700; }
-    h3 { color: #D4AF37 !important; font-family: 'Playfair Display', serif; }
-    p, label, .stMarkdown { color: #F5F5DC !important; font-size: 16px; }
+    /* Elegant Title and Header styling */
+    h1 { 
+        color: #E5A93C !important; 
+        font-family: 'Georgia', serif; 
+        font-size: 40px; 
+        text-align: center; 
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
     
-    /* Input Boxes Custom Design */
+    /* Card Container for Inputs and Results */
+    .custom-card {
+        background-color: #1C0306;
+        border: 1px solid rgba(229, 169, 60, 0.2);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+    }
+    
+    /* Input field text colors */
+    label, .stMarkdown p { 
+        color: #E0D4D5 !important; 
+        font-size: 15px; 
+        font-weight: 500;
+    }
+    
+    /* Clean Input Box Styling */
     .stNumberInput input, .stSelectbox div, .stSlider div { 
-        background-color: #1a0101 !important; 
-        color: #F5F5DC !important; 
-        border: 1px solid rgba(212, 175, 55, 0.4) !important; 
+        background-color: #0E0102 !important; 
+        color: #FFFFFF !important; 
+        border: 1px solid rgba(229, 169, 60, 0.3) !important; 
+        border-radius: 8px !important;
     }
     
-    /* Graduated Action Button */
+    /* Velvet Action Button */
     .stButton>button { 
-        background: linear-gradient(135deg, #8B0000 0%, #4A0404 100%); 
-        color: #D4AF37 !important; 
-        border: 1px solid #D4AF37; 
-        border-radius: 8px; width: 100%; height: 50px; font-size: 18px; font-weight: bold;
-        transition: 0.3s;
+        background: linear-gradient(135deg, #990011 0%, #55000A 100%); 
+        color: #FFFFFF !important; 
+        border: 1px solid #E5A93C; 
+        border-radius: 8px; 
+        width: 100%; 
+        height: 52px; 
+        font-size: 18px; 
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(153, 0, 17, 0.4);
+        transition: all 0.3s ease;
     }
-    .stButton>button:hover { transform: scale(1.02); border-color: #FFFFFF; }
+    .stButton>button:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 20px rgba(229, 169, 60, 0.4);
+        border-color: #FFFFFF;
+    }
     
-    /* Status Boxes */
-    .result-box-safe { background-color: rgba(0, 128, 0, 0.25); border: 2px solid #00FF00; padding: 25px; border-radius: 12px; text-align: center; }
-    .result-box-fraud { background-color: rgba(139, 0, 0, 0.45); border: 2px solid #FF3333; padding: 25px; border-radius: 12px; text-align: center; }
+    /* Soft Status Output Boxes */
+    .result-box-safe { 
+        background: linear-gradient(135deg, rgba(20, 50, 20, 0.6) 0%, rgba(10, 30, 10, 0.8) 100%);
+        border: 2px solid #2ECC71; 
+        padding: 30px; 
+        border-radius: 12px; 
+        text-align: center; 
+    }
+    .result-box-fraud { 
+        background: linear-gradient(135deg, rgba(80, 10, 15, 0.6) 0%, rgba(40, 5, 5, 0.8) 100%);
+        border: 2px solid #E74C3C; 
+        padding: 30px; 
+        border-radius: 12px; 
+        text-align: center; 
+    }
+    
+    /* Asset error beautifully customized */
+    .stAlert {
+        background-color: #3D080E !important;
+        color: #FFC107 !important;
+        border: 1px solid #E5A93C !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>🍷 FRAUD SENTRY: FINANCIAL RISK DASHBOARD</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #D4AF37; font-size: 18px;'>Graduated KNN Engine & Real-Time Operational Insights</p>", unsafe_allow_html=True)
-st.markdown("<hr style='border: 1px solid rgba(212, 175, 55, 0.2);'>", unsafe_allow_html=True)
+st.markdown("<h1>👑 FRAUD SENTRY DASHBOARD</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #D2C4C5; font-size: 16px; margin-bottom: 25px;'>Advanced Real-Time Financial Risk Intelligence System</p>", unsafe_allow_html=True)
 
 # 2. Asset Loader
 @st.cache_resource
@@ -56,13 +111,14 @@ def load_assets():
 try:
     model, scaler = load_assets()
 except Exception as e:
-    st.error("Assets Error: Make sure 'knn_model.pkl' and 'scaler.pkl' are uploaded to GitHub.")
+    st.error("⚠️ System Notice: 'knn_model.pkl' or 'scaler.pkl' not found locally. Please ensure files are committed to your GitHub repository root folder.")
 
-# 3. Two-Column Dashboard Layout
-col1, col2 = st.columns([1.2, 1])
+# 3. Clean Spaced Layout
+col1, col2 = st.columns([1.1, 1], gap="large")
 
 with col1:
-    st.markdown("### 📝 Input Transaction Metrics")
+    st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📝 Transaction Metrics</h3>", unsafe_allow_html=True)
     
     amount = st.number_input("Transaction Amount ($)", min_value=0.0, value=150.0)
     account_age_days = st.number_input("Account Age (Days)", min_value=0, value=365)
@@ -76,7 +132,6 @@ with col1:
     three_ds_flag = st.selectbox("3D Secure Dynamic Flag", [1, 0])
     promo_used = st.selectbox("Promo Code Applied", [0, 1])
     
-    # 33 features placeholder array matching notebook
     input_data = np.zeros(33)
     input_data[0] = account_age_days
     input_data[1] = total_transactions_user
@@ -91,51 +146,60 @@ with col1:
 
     st.write("")
     predict_btn = st.button("🍷 Run Risk Evaluation")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
-    st.markdown("### 📊 Operational Integrity Report")
+    st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📊 Operational Integrity Report</h3>", unsafe_allow_html=True)
     
     if predict_btn:
-        scaled_input = scaler.transform([input_data])
-        prediction = model.predict(scaled_input)[0]
-        prediction_proba = model.predict_proba(scaled_input)[0]
-        
-        if prediction == 1:
-            st.markdown(f"""
-                <div class='result-box-fraud'>
-                    <h2 style='color: #FF3333; margin: 0;'>🚨 TRANSACTION BLOCKED</h2>
-                    <p style='color: #FFFFFF; font-size: 18px; margin-top: 10px;'>High Probability Fraud Pattern Detected</p>
-                    <h3 style='color: #D4AF37; margin: 5px;'>Confidence: {prediction_proba[1]*100:.1f}%</h3>
-                </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-                <div class='result-box-safe'>
-                    <h2 style='color: #33FF33; margin: 0;'>✅ TRANSACTION CLEAN</h2>
-                    <p style='color: #FFFFFF; font-size: 18px; margin-top: 10px;'>Authorized and Cleared for Settlement</p>
-                    <h3 style='color: #D4AF37; margin: 5px;'>Confidence: {prediction_proba[0]*100:.1f}%</h3>
-                </div>
-            """, unsafe_allow_html=True)
-    else:
-        st.info("Awaiting input execution. Adjust the system metrics on the left panel.")
+        try:
+            scaled_input = scaler.transform([input_data])
+            prediction = model.predict(scaled_input)[0]
+            prediction_proba = model.predict_proba(scaled_input)[0]
             
-    st.write("")
-    st.markdown("### 📈 Core Decision Metrics (Non-Tech Explanation)")
-    st.caption("This visualization breaks down the internal metric weights calculated for the model's structural features:")
+            if prediction == 1:
+                st.markdown(f"""
+                    <div class='result-box-fraud'>
+                        <h2 style='color: #E74C3C; margin: 0; font-size: 24px;'>🚨 TRANSACTION BLOCKED</h2>
+                        <p style='color: #FFFFFF; font-size: 16px; margin-top: 10px;'>High Probability Fraud Pattern Detected</p>
+                        <h4 style='color: #E5A93C; margin: 5px;'>Confidence: {prediction_proba[1]*100:.1f}%</h4>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                    <div class='result-box-safe'>
+                        <h2 style='color: #2ECC71; margin: 0; font-size: 24px;'>✅ TRANSACTION CLEAN</h2>
+                        <p style='color: #FFFFFF; font-size: 16px; margin-top: 10px;'>Authorized and Cleared for Settlement</p>
+                        <h4 style='color: #E5A93C; margin: 5px;'>Confidence: {prediction_proba[0]*100:.1f}%</h4>
+                    </div>
+                """, unsafe_allow_html=True)
+        except NameError:
+            st.warning("Cannot run evaluation because model/scaler assets are not loaded.")
+    else:
+        st.info("System Ready. Awaiting parameter submission from the left panel.")
+    st.markdown("</div>", unsafe_allow_html=True)
+            
+    st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📈 Core Decision Drivers</h3>", unsafe_allow_html=True)
+    st.caption("Operational feature impact weights computed by Mutual Information ranking:")
     
-    # Elegant custom colored feature importance chart
-    fig, ax = plt.subplots(figsize=(6, 4))
-    fig.patch.set_facecolor('#2D0202')
-    ax.set_facecolor('#1a0101')
+    # Beautiful Matplotlib chart adjustment
+    fig, ax = plt.subplots(figsize=(6, 3.8))
+    fig.patch.set_facecolor('#1C0306')
+    ax.set_facecolor('#0E0102')
     
     features = ['Transaction Hour', 'Shipping Distance', 'Avg Amount', 'Account Age', 'Amount']
     importance = [0.008, 0.024, 0.026, 0.029, 0.033]
     
-    ax.barh(features, importance, color='#8B0000', edgecolor='#D4AF37', height=0.5)
-    ax.set_title("Top Operational Drivers Behind Risk Assessment", color='#D4AF37', fontsize=11, weight='bold')
-    ax.tick_params(colors='#F5F5DC', labelsize=9)
-    ax.xaxis.grid(True, linestyle='--', alpha=0.2, color='#F5F5DC')
+    ax.barh(features, importance, color='#990011', edgecolor='#E5A93C', height=0.55)
+    ax.tick_params(colors='#F8F9FA', labelsize=10)
+    ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#F8F9FA')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_color('rgba(229, 169, 60, 0.4)')
+    ax.spines['bottom'].set_color('rgba(229, 169, 60, 0.4)')
     
+    import streamlit as st
     st.pyplot(fig)
+    st.markdown("</div>", unsafe_allow_html=True)
