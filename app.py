@@ -5,99 +5,91 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 1. Premium Soft Wine & Charcoal Elegant Aesthetic
+# 1. Soft Polymorphism Aesthetic (Half-White, Light Gray & Reddish Wine Accents)
 st.set_page_config(page_title="Fraud Sentry Dashboard", layout="wide")
 
 st.markdown("""
     <style>
-    /* Main App Background - Elegant Charcoal Dark */
+    /* Main App Background - Elegant Soft Off-White */
     .stApp { 
-        background: radial-gradient(circle, #250206 0%, #120102 100%);
-        color: #F8F9FA; 
+        background: radial-gradient(circle, #FCFBF9 0%, #F4F1EA 100%);
+        color: #2D0202; 
     }
     
-    /* Elegant Title and Header styling */
+    /* Clean Serif Typography */
     h1 { 
-        color: #E5A93C !important; 
+        color: #8B0000 !important; 
         font-family: 'Georgia', serif; 
-        font-size: 40px; 
+        font-size: 42px; 
         text-align: center; 
         font-weight: 700;
-        letter-spacing: 1px;
         margin-bottom: 5px;
     }
     
-    /* Card Container for Inputs and Results */
+    /* Elegant Polymorphic Light Cards */
     .custom-card {
-        background-color: #1C0306;
-        border: 1px solid rgba(229, 169, 60, 0.2);
+        background-color: #FFFFFF;
+        border: 1px solid rgba(139, 0, 0, 0.1);
         padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        margin-bottom: 20px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        margin-bottom: 25px;
     }
     
-    /* Input field text colors */
+    /* Input Text Labels */
     label, .stMarkdown p { 
-        color: #E0D4D5 !important; 
+        color: #4A4A4A !important; 
         font-size: 15px; 
-        font-weight: 500;
+        font-weight: 600;
     }
     
-    /* Clean Input Box Styling */
+    /* Minimalist Light Input Fields */
     .stNumberInput input, .stSelectbox div, .stSlider div { 
-        background-color: #0E0102 !important; 
-        color: #FFFFFF !important; 
-        border: 1px solid rgba(229, 169, 60, 0.3) !important; 
+        background-color: #FAF9F6 !important; 
+        color: #2D0202 !important; 
+        border: 1px solid rgba(139, 0, 0, 0.2) !important; 
         border-radius: 8px !important;
     }
     
-    /* Velvet Action Button */
+    /* Velvet Red Premium Button */
     .stButton>button { 
-        background: linear-gradient(135deg, #990011 0%, #55000A 100%); 
+        background: linear-gradient(135deg, #A31D1D 0%, #6E0D0D 100%); 
         color: #FFFFFF !important; 
-        border: 1px solid #E5A93C; 
+        border: none; 
         border-radius: 8px; 
         width: 100%; 
         height: 52px; 
         font-size: 18px; 
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(153, 0, 17, 0.4);
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(163, 29, 29, 0.2);
         transition: all 0.3s ease;
     }
     .stButton>button:hover { 
         transform: translateY(-2px); 
-        box-shadow: 0 6px 20px rgba(229, 169, 60, 0.4);
-        border-color: #FFFFFF;
+        box-shadow: 0 6px 20px rgba(163, 29, 29, 0.4);
+        background: linear-gradient(135deg, #6E0D0D 0%, #A31D1D 100%);
     }
     
-    /* Soft Status Output Boxes */
+    /* Sophisticated Soft Output Result Boxes */
     .result-box-safe { 
-        background: linear-gradient(135deg, rgba(20, 50, 20, 0.6) 0%, rgba(10, 30, 10, 0.8) 100%);
+        background-color: #E8F8F5;
         border: 2px solid #2ECC71; 
-        padding: 30px; 
+        padding: 25px; 
         border-radius: 12px; 
         text-align: center; 
     }
     .result-box-fraud { 
-        background: linear-gradient(135deg, rgba(80, 10, 15, 0.6) 0%, rgba(40, 5, 5, 0.8) 100%);
+        background-color: #FFDAC1;
         border: 2px solid #E74C3C; 
-        padding: 30px; 
+        padding: 25px; 
         border-radius: 12px; 
         text-align: center; 
-    }
-    
-    /* Asset error beautifully customized */
-    .stAlert {
-        background-color: #3D080E !important;
-        color: #FFC107 !important;
-        border: 1px solid #E5A93C !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
 st.markdown("<h1>👑 FRAUD SENTRY DASHBOARD</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #D2C4C5; font-size: 16px; margin-bottom: 25px;'>Advanced Real-Time Financial Risk Intelligence System</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #6E0D0D; font-size: 16px; margin-bottom: 25px; font-weight: 500;'>Advanced Real-Time Financial Risk Intelligence System</p>", unsafe_allow_html=True)
 
 # 2. Asset Loader
 @st.cache_resource
@@ -118,7 +110,7 @@ col1, col2 = st.columns([1.1, 1], gap="large")
 
 with col1:
     st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
-    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📝 Transaction Metrics</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #A31D1D; margin-top:0; font-family: Georgia, serif;'>📝 Transaction Metrics</h3>", unsafe_allow_html=True)
     
     amount = st.number_input("Transaction Amount ($)", min_value=0.0, value=150.0)
     account_age_days = st.number_input("Account Age (Days)", min_value=0, value=365)
@@ -150,7 +142,7 @@ with col1:
 
 with col2:
     st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
-    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📊 Operational Integrity Report</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #A31D1D; margin-top:0; font-family: Georgia, serif;'>📊 Operational Integrity Report</h3>", unsafe_allow_html=True)
     
     if predict_btn:
         try:
@@ -162,16 +154,16 @@ with col2:
                 st.markdown(f"""
                     <div class='result-box-fraud'>
                         <h2 style='color: #E74C3C; margin: 0; font-size: 24px;'>🚨 TRANSACTION BLOCKED</h2>
-                        <p style='color: #FFFFFF; font-size: 16px; margin-top: 10px;'>High Probability Fraud Pattern Detected</p>
-                        <h4 style='color: #E5A93C; margin: 5px;'>Confidence: {prediction_proba[1]*100:.1f}%</h4>
+                        <p style='color: #2D0202; font-size: 16px; margin-top: 10px;'>High Probability Fraud Pattern Detected</p>
+                        <h4 style='color: #A31D1D; margin: 5px;'>Confidence: {prediction_proba[1]*100:.1f}%</h4>
                     </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                     <div class='result-box-safe'>
                         <h2 style='color: #2ECC71; margin: 0; font-size: 24px;'>✅ TRANSACTION CLEAN</h2>
-                        <p style='color: #FFFFFF; font-size: 16px; margin-top: 10px;'>Authorized and Cleared for Settlement</p>
-                        <h4 style='color: #E5A93C; margin: 5px;'>Confidence: {prediction_proba[0]*100:.1f}%</h4>
+                        <p style='color: #2D0202; font-size: 16px; margin-top: 10px;'>Authorized and Cleared for Settlement</p>
+                        <h4 style='color: #A31D1D; margin: 5px;'>Confidence: {prediction_proba[0]*100:.1f}%</h4>
                     </div>
                 """, unsafe_allow_html=True)
         except NameError:
@@ -181,25 +173,24 @@ with col2:
     st.markdown("</div>", unsafe_allow_html=True)
             
     st.markdown("<div class='custom-card'>", unsafe_allow_html=True)
-    st.markdown("<h3 style='color: #E5A93C; margin-top:0;'>📈 Core Decision Drivers</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #A31D1D; margin-top:0; font-family: Georgia, serif;'>📈 Core Decision Drivers</h3>", unsafe_allow_html=True)
     st.caption("Operational feature impact weights computed by Mutual Information ranking:")
     
-    # Beautiful Matplotlib chart adjustment
+    # Elegant light chart logic with corrected color arguments to prevent ValueErrors
     fig, ax = plt.subplots(figsize=(6, 3.8))
-    fig.patch.set_facecolor('#1C0306')
-    ax.set_facecolor('#0E0102')
+    fig.patch.set_facecolor('#FFFFFF')
+    ax.set_facecolor('#FAF9F6')
     
     features = ['Transaction Hour', 'Shipping Distance', 'Avg Amount', 'Account Age', 'Amount']
     importance = [0.008, 0.024, 0.026, 0.029, 0.033]
     
-    ax.barh(features, importance, color='#990011', edgecolor='#E5A93C', height=0.55)
-    ax.tick_params(colors='#F8F9FA', labelsize=10)
-    ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#F8F9FA')
+    ax.barh(features, importance, color='#A31D1D', edgecolor='#6E0D0D', height=0.55)
+    ax.tick_params(colors='#2D0202', labelsize=10)
+    ax.xaxis.grid(True, linestyle='--', alpha=0.3, color='#B0B0B0')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('rgba(229, 169, 60, 0.4)')
-    ax.spines['bottom'].set_color('rgba(229, 169, 60, 0.4)')
+    ax.spines['left'].set_color('#6E0D0D')
+    ax.spines['bottom'].set_color('#6E0D0D')
     
-    import streamlit as st
     st.pyplot(fig)
     st.markdown("</div>", unsafe_allow_html=True)
